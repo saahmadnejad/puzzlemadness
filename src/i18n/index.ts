@@ -2,15 +2,13 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { findBestLanguageTag } from 'react-native-localize';
+import { Language, SUPPORTED_LANGUAGE_CODES } from './languages';
 import { fa } from './resources/fa';
 import { en } from './resources/en';
 
 export const LANGUAGE_KEY = '@sudoku/language';
-export type Language = 'en' | 'fa';
-export const SUPPORTED: Language[] = ['en', 'fa'];
-
-/** RTL languages in this app. */
-export const RTL_LANGUAGES: Language[] = ['fa'];
+export { LANGUAGES, isRTL, languageInfo, SUPPORTED_LANGUAGE_CODES } from './languages';
+export type { LanguageInfo } from './languages';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -27,7 +25,7 @@ i18n.use(initReactI18next).init({
 
 /** Detect the device language, falling back to English. */
 export function detectDeviceLanguage(): Language {
-  const tag = findBestLanguageTag(SUPPORTED)?.languageTag;
+  const tag = findBestLanguageTag(SUPPORTED_LANGUAGE_CODES)?.languageTag;
   return (tag as Language) ?? 'en';
 }
 
@@ -36,8 +34,8 @@ export async function initLanguage(): Promise<Language> {
   let lang: Language | null = null;
   try {
     const stored = await AsyncStorage.getItem(LANGUAGE_KEY);
-    if (stored === 'en' || stored === 'fa') {
-      lang = stored;
+    if (stored && SUPPORTED_LANGUAGE_CODES.includes(stored as Language)) {
+      lang = stored as Language;
     }
   } catch {
     // Ignore storage errors; fall through to device detection.
@@ -51,10 +49,6 @@ export async function initLanguage(): Promise<Language> {
 export async function setLanguage(lang: Language): Promise<void> {
   await AsyncStorage.setItem(LANGUAGE_KEY, lang);
   await i18n.changeLanguage(lang);
-}
-
-export function isRTL(lang: string): boolean {
-  return RTL_LANGUAGES.includes(lang as Language);
 }
 
 export default i18n;

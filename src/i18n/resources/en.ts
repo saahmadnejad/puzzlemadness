@@ -1,9 +1,13 @@
 export const en = {
+  settings: {
+    title: 'Settings',
+    language: 'Language',
+    about: 'About',
+    version: 'Version {{version}}',
+  },
   home: {
     title: 'Sudoku Madness',
     subtitle: 'Daily puzzle, three difficulties, unlimited play',
-    play: 'Play',
-    language: 'Language',
     puzzles: {
       daily: { title: 'Daily Puzzle', subtitle: "Today's puzzle — same for everyone" },
       easy: { title: 'Easy', subtitle: 'More clues, fewer techniques needed' },
@@ -21,6 +25,10 @@ export const en = {
     home: 'Home',
     notes: '✏️ Notes',
     erase: '⌫ Erase',
+    dialog: {
+      time: 'Time: {{value}}',
+      mistakes: 'Mistakes: {{value}}',
+    },
   },
 };
 

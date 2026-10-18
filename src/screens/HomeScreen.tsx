@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Language, isRTL, setLanguage } from '../i18n';
+import { isRTL } from '../i18n';
 import { Difficulty } from '../puzzles/generator';
 import { theme } from '../theme';
 import { RootStackParamList } from '../types';
@@ -24,24 +24,13 @@ export function HomeScreen({ navigation }: Props) {
             <Text style={[styles.title, rtl && styles.rtl]}>{t('home.title')}</Text>
             <Text style={[styles.subtitle, rtl && styles.rtl]}>{t('home.subtitle')}</Text>
           </View>
-          <View style={styles.langSwitch}>
-            {(['en', 'fa'] as Language[]).map(lang => (
-              <Pressable
-                key={lang}
-                style={[styles.langPill, i18n.language === lang && styles.langPillActive]}
-                onPress={() => setLanguage(lang)}
-              >
-                <Text
-                  style={[
-                    styles.langPillText,
-                    i18n.language === lang && styles.langPillTextActive,
-                  ]}
-                >
-                  {lang === 'en' ? 'EN' : 'فا'}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
+          <Pressable
+            style={styles.settingsButton}
+            onPress={() => navigation.navigate('Settings')}
+            hitSlop={12}
+          >
+            <Text style={styles.settingsIcon}>⚙️</Text>
+          </Pressable>
         </View>
 
         <View style={styles.cards}>
@@ -100,29 +89,19 @@ const styles = StyleSheet.create({
     writingDirection: 'rtl',
     textAlign: 'right',
   },
-  langSwitch: {
-    flexDirection: 'row',
+  settingsButton: {
     marginTop: 20,
-    backgroundColor: theme.colors.padKey,
-    borderRadius: 8,
-    padding: 3,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: theme.colors.surface,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  langPill: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 6,
-  },
-  langPillActive: {
-    backgroundColor: theme.colors.accent,
-  },
-  langPillText: {
-    fontSize: 13,
-    fontFamily: theme.fonts.bold,
-    fontWeight: 'normal',
-    color: theme.colors.textMuted,
-  },
-  langPillTextActive: {
-    color: '#ffffff',
+  settingsIcon: {
+    fontSize: 18,
   },
   cards: {
     gap: 14,

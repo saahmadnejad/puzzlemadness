@@ -113,10 +113,10 @@ function GameSession({ puzzle, difficulty, onBack, onNewGame }: SessionProps) {
           <View style={styles.dialog}>
             <Text style={[styles.dialogTitle, rtl && styles.rtl]}>{t('game.solved')}</Text>
             <Text style={[styles.dialogLine, rtl && styles.rtl]}>
-              {t('game.time')}: {digits(formatTime(elapsed))}
+              {t('game.dialog.time', { value: digits(formatTime(elapsed)) })}
             </Text>
             <Text style={[styles.dialogLine, rtl && styles.rtl]}>
-              {t('game.mistakes')}: {digits(state.mistakes)}
+              {t('game.dialog.mistakes', { value: digits(state.mistakes) })}
             </Text>
             <View style={styles.dialogButtons}>
               <Pressable

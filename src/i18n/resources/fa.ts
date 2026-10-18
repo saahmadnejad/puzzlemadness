@@ -1,11 +1,15 @@
 import { Resources } from './en';
 
 export const fa: Resources = {
-  home: {
-    title: 'سودوکو مس',
-    subtitle: 'پازل روزانه، سه سطح دشواری، بازی نامحدود',
-    play: 'بازی',
+  settings: {
+    title: 'تنظیمات',
     language: 'زبان',
+    about: 'درباره برنامه',
+    version: 'نسخه {{version}}',
+  },
+  home: {
+    title: 'دیوانه پازل',
+    subtitle: 'پازل روزانه، سه سطح دشواری، بازی نامحدود',
     puzzles: {
       daily: {
         title: 'پازل روزانه',
@@ -35,5 +39,9 @@ export const fa: Resources = {
     home: 'خانه',
     notes: '✏️ یادداشت',
     erase: '⌫ حذف',
+    dialog: {
+      time: 'زمان: {{value}}',
+      mistakes: 'اشتباهات: {{value}}',
+    },
   },
 };

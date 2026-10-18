@@ -1,6 +1,7 @@
 import { en } from '../src/i18n/resources/en';
 import { fa } from '../src/i18n/resources/fa';
 import { toPersianDigits } from '../src/i18n/digits';
+import { LANGUAGES, SUPPORTED_LANGUAGE_CODES } from '../src/i18n/languages';
 
 type StringLeafPaths<T> = {
   [K in keyof T & string]: T[K] extends string ? K : `${K}.${StringLeafPaths<T[K]>}`;
@@ -26,6 +27,20 @@ describe('i18n resources', () => {
         typeof v === 'string' ? (v.trim() === '' ? ['empty'] : []) : checkEmpty(v),
       );
     expect(checkEmpty(fa)).toEqual([]);
+  });
+});
+
+describe('language registry', () => {
+  test('codes are unique and non-empty labels', () => {
+    const codes = LANGUAGES.map(l => l.code);
+    expect(new Set(codes).size).toBe(codes.length);
+    for (const l of LANGUAGES) {
+      expect(l.label.trim()).not.toBe('');
+    }
+  });
+
+  test('supported codes mirror the registry', () => {
+    expect(SUPPORTED_LANGUAGE_CODES).toEqual(LANGUAGES.map(l => l.code));
   });
 });
 
