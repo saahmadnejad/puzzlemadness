@@ -12,6 +12,8 @@
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		761780EF2CA45674006654EF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EE2CA45674006654EF /* SceneDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		FA7100000000000000000003 /* Vazir-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA7100000000000000000001 /* Vazir-Regular.ttf */; };
+		FA7100000000000000000004 /* Vazir-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA7100000000000000000002 /* Vazir-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,8 @@
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = SudokuMadness/AppDelegate.swift; sourceTree = "<group>"; };
 		761780EE2CA45674006654EF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = SudokuMadness/SceneDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SudokuMadness/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FA7100000000000000000001 /* Vazir-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Vazir-Regular.ttf; path = SudokuMadness/Fonts/Vazir-Regular.ttf; sourceTree = "<group>"; };
+		FA7100000000000000000002 /* Vazir-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Vazir-Bold.ttf; path = SudokuMadness/Fonts/Vazir-Bold.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -49,6 +53,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				FA7100000000000000000001 /* Vazir-Regular.ttf */,
+				FA7100000000000000000002 /* Vazir-Bold.ttf */,
 			);
 			name = SudokuMadness;
 			sourceTree = "<group>";
@@ -162,6 +168,8 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				FA7100000000000000000003 /* Vazir-Regular.ttf in Resources */,
+				FA7100000000000000000004 /* Vazir-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@ A bare React Native (TypeScript) sudoku app inspired by [puzzlemadness.co.uk](ht
 - **Daily puzzle** — deterministic per date, same for every player (seeded PRNG)
 - **On-device generator** — no backend; puzzles are generated locally with a uniqueness check
 - **Core play** — cell/peer highlighting, pencil notes (auto-cleared from peers), erase, error highlighting, mistake counter, timer, solved dialog
+- **i18n** — English and Farsi (فارسی) with a persisted in-app language switcher, RTL text alignment, Persian digits (۰–۹) everywhere numbers appear, and the Vazir font for both languages
 - Unlimited "New game" per difficulty
 
 ## Getting started
@@ -27,6 +28,10 @@ npm test
 
 ```
 src/
+  i18n/
+    index.ts          # i18next setup, locale detection, persistence
+    digits.ts         # Persian digit formatting helpers
+    resources/        # en.ts, fa.ts (typed, key-parity tested)
   puzzles/
     rng.ts          # seeded PRNG (mulberry32) + helpers
     generator.ts    # solution solver, puzzle generator, daily seed
