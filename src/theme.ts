@@ -1,0 +1,25 @@
+export const theme = {
+  colors: {
+    background: '#f4f5f7',
+    surface: '#ffffff',
+    border: '#c9ced6',
+    borderBold: '#3a4150',
+    text: '#1c2330',
+    textMuted: '#7b8494',
+    accent: '#2563eb',
+    accentSoft: '#dbeafe',
+    highlight: '#fff7cc',
+    given: '#1c2330',
+    user: '#2563eb',
+    error: '#dc2626',
+    errorSoft: '#fee2e2',
+    success: '#16a34a',
+    padKey: '#eef1f5',
+    danger: '#fee2e2',
+  },
+  fontSize: {
+    cell: 22,
+    note: 9,
+    pad: 24,
+  },
+};
