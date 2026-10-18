@@ -7,12 +7,29 @@ export const en = {
   },
   home: {
     title: 'Sudoku Madness',
-    subtitle: 'Daily puzzle, three difficulties, unlimited play',
-    puzzles: {
-      daily: { title: 'Daily Puzzle', subtitle: "Today's puzzle — same for everyone" },
-      easy: { title: 'Easy', subtitle: 'More clues, fewer techniques needed' },
-      medium: { title: 'Medium', subtitle: 'A balanced challenge' },
-      hard: { title: 'Hard', subtitle: 'Fewest clues — bring your A-game' },
+    subtitle: 'Daily puzzles, three difficulties, unlimited play',
+    games: 'Games',
+  },
+  games: {
+    sudoku: {
+      title: 'Sudoku',
+      subtitle: 'Classic number puzzle',
+      difficulties: {
+        daily: { title: 'Daily Puzzle', subtitle: "Today's puzzle — same for everyone" },
+        easy: { title: 'Easy', subtitle: 'More clues, fewer techniques needed' },
+        medium: { title: 'Medium', subtitle: 'A balanced challenge' },
+        hard: { title: 'Hard', subtitle: 'Fewest clues — bring your A-game' },
+      },
+    },
+    maze: {
+      title: 'Maze',
+      subtitle: 'Find the way from start to finish',
+      difficulties: {
+        daily: { title: 'Daily Maze', subtitle: "Today's maze — same for everyone" },
+        easy: { title: 'Easy', subtitle: 'A small grid to warm up' },
+        medium: { title: 'Medium', subtitle: 'A bigger grid' },
+        hard: { title: 'Hard', subtitle: 'A big grid — good luck!' },
+      },
     },
   },
   game: {

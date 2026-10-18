@@ -1,15 +1,14 @@
 # Sudoku Madness
 
-A bare React Native (TypeScript) sudoku app inspired by [puzzlemadness.co.uk](https://puzzlemadness.co.uk/) — daily puzzle, three difficulties, fully offline.
+A React Native (TypeScript) puzzle super app inspired by [puzzlemadness.co.uk](https://puzzlemadness.co.uk/) — fully offline, no backend. Games so far: **Sudoku** and **Maze**.
 
 ## Features (v1)
 
-- **Classic 9×9 sudoku** with Easy / Medium / Hard difficulties
-- **Daily puzzle** — deterministic per date, same for every player (seeded PRNG)
-- **On-device generator** — no backend; puzzles are generated locally with a uniqueness check
-- **Core play** — cell/peer highlighting, pencil notes (auto-cleared from peers), erase, error highlighting, mistake counter, timer, solved dialog
-- **i18n** — English and Farsi (فارسی) with a persisted in-app language switcher, RTL text alignment, Persian digits (۰–۹) everywhere numbers appear, and the Vazir font for both languages
-- Unlimited "New game" per difficulty
+- **Super-app shell** — home lists games from a registry (`src/games/registry.ts`); each game has a difficulty picker with a daily option. Adding a game = registry entry + resources + screen
+- **Sudoku** — Easy / Medium / Hard + daily puzzle, on-device generator with uniqueness check, pencil notes, error highlighting, mistake counter, timer
+- **Maze** — Easy / Medium / Hard + daily maze, drag your finger to draw the path (backtracking supported), timer
+- **Daily puzzles** — deterministic per date, same for every player (seeded PRNG), no server needed
+- **i18n** — English and Farsi (فارسی) driven by a language registry (code, native label, RTL, digit style), persisted language switcher in Settings, Persian digits (۰–۹), Vazir font
 
 ## Getting started
 
@@ -28,8 +27,11 @@ npm test
 
 ```
 src/
+  games/
+    registry.ts      # game list shown on the home screen
   i18n/
     index.ts          # i18next setup, locale detection, persistence
+    languages.ts      # language registry (code, label, rtl, digit style)
     digits.ts         # Persian digit formatting helpers
     resources/        # en.ts, fa.ts (typed, key-parity tested)
   puzzles/

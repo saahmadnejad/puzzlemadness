@@ -4,13 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { isRTL } from '../i18n';
-import { Difficulty } from '../puzzles/generator';
+import { GAMES } from '../games/registry';
 import { theme } from '../theme';
 import { RootStackParamList } from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
-
-const OPTIONS: Difficulty[] = ['daily', 'easy', 'medium', 'hard'];
 
 export function HomeScreen({ navigation }: Props) {
   const { t, i18n } = useTranslation();
@@ -33,19 +31,24 @@ export function HomeScreen({ navigation }: Props) {
           </Pressable>
         </View>
 
+        <Text style={[styles.sectionTitle, rtl && styles.rtl]}>{t('home.games')}</Text>
+
         <View style={styles.cards}>
-          {OPTIONS.map(difficulty => (
+          {GAMES.map(game => (
             <Pressable
-              key={difficulty}
+              key={game.id}
               style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
-              onPress={() => navigation.navigate('Game', { difficulty })}
+              onPress={() => navigation.navigate('GamePicker', { game: game.id })}
             >
-              <Text style={[styles.cardTitle, rtl && styles.rtl]}>
-                {t(`home.puzzles.${difficulty}.title`)}
-              </Text>
-              <Text style={[styles.cardSubtitle, rtl && styles.rtl]}>
-                {t(`home.puzzles.${difficulty}.subtitle`)}
-              </Text>
+              <Text style={styles.cardEmoji}>{game.emoji}</Text>
+              <View style={styles.cardText}>
+                <Text style={[styles.cardTitle, rtl && styles.rtl]}>
+                  {t(`games.${game.id}.title`)}
+                </Text>
+                <Text style={[styles.cardSubtitle, rtl && styles.rtl]}>
+                  {t(`games.${game.id}.subtitle`)}
+                </Text>
+              </View>
             </Pressable>
           ))}
         </View>
@@ -103,10 +106,21 @@ const styles = StyleSheet.create({
   settingsIcon: {
     fontSize: 18,
   },
+  sectionTitle: {
+    fontSize: 13,
+    fontFamily: theme.fonts.regular,
+    color: theme.colors.textMuted,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 8,
+    marginHorizontal: 4,
+  },
   cards: {
     gap: 14,
   },
   card: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: theme.colors.surface,
     borderRadius: 14,
     padding: 18,
@@ -115,6 +129,13 @@ const styles = StyleSheet.create({
   },
   cardPressed: {
     backgroundColor: theme.colors.accentSoft,
+  },
+  cardEmoji: {
+    fontSize: 32,
+    marginRight: 16,
+  },
+  cardText: {
+    flex: 1,
   },
   cardTitle: {
     fontSize: 19,

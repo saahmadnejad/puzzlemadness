@@ -70,7 +70,7 @@ function GameSession({ puzzle, difficulty, onBack, onNewGame }: SessionProps) {
           <Text style={[styles.back, rtl && styles.rtl]}>{t('game.back')}</Text>
         </Pressable>
         <Text style={[styles.headerTitle, rtl && styles.rtl]}>
-          {t(`home.puzzles.${difficulty}.title`)}
+          {t(`games.sudoku.difficulties.${difficulty}.title`)}
         </Text>
         <Pressable onPress={onNewGame} hitSlop={12}>
           <Text style={[styles.newGame, rtl && styles.rtl]}>{t('game.new')}</Text>
