@@ -19,10 +19,16 @@ export function GamePickerScreen({ navigation, route }: Props) {
   const rtl = isRTL(i18n.language);
 
   const openGame = (difficulty: (typeof DIFFICULTIES)[number]) => {
-    if (game === 'sudoku') {
-      navigation.navigate('Game', { difficulty });
-    } else {
-      navigation.navigate('MazeGame', { difficulty });
+    switch (game) {
+      case 'sudoku':
+        navigation.navigate('Game', { difficulty });
+        break;
+      case 'maze':
+        navigation.navigate('MazeGame', { difficulty });
+        break;
+      case 'nonogram':
+        navigation.navigate('NonogramGame', { difficulty });
+        break;
     }
   };
 

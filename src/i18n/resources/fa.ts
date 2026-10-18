@@ -57,6 +57,28 @@ export const fa: Resources = {
         },
       },
     },
+    nonogram: {
+      title: 'نونوگرام',
+      subtitle: 'اعداد را دنبال کن تا تصویر پنهان آشکار شود',
+      difficulties: {
+        daily: {
+          title: 'نونوگرام روزانه',
+          subtitle: 'پازل امروز — برای همه یکسان است',
+        },
+        easy: {
+          title: 'آسان',
+          subtitle: 'تصویری با شبکه ۱۰×۱۰',
+        },
+        medium: {
+          title: 'متوسط',
+          subtitle: 'تصویری با شبکه ۱۵×۱۵',
+        },
+        hard: {
+          title: 'سخت',
+          subtitle: 'تصویری با شبکه ۲۰×۲۰ — بزرگ است!',
+        },
+      },
+    },
   },
   game: {
     back: 'بازگشت ‹',
@@ -68,6 +90,7 @@ export const fa: Resources = {
     home: 'خانه',
     notes: '✏️ یادداشت',
     erase: '⌫ حذف',
+    filled: 'خانه‌های پر',
     dialog: {
       time: 'زمان: {{value}}',
       mistakes: 'اشتباهات: {{value}}',

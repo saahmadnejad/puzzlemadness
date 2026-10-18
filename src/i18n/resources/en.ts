@@ -31,6 +31,16 @@ export const en = {
         hard: { title: 'Hard', subtitle: 'A big grid — good luck!' },
       },
     },
+    nonogram: {
+      title: 'Nonogram',
+      subtitle: 'Follow the numbers to reveal the hidden picture',
+      difficulties: {
+        daily: { title: 'Daily Nonogram', subtitle: "Today's picture — same for everyone" },
+        easy: { title: 'Easy', subtitle: 'A 10×10 picture' },
+        medium: { title: 'Medium', subtitle: 'A 15×15 picture' },
+        hard: { title: 'Hard', subtitle: 'A 20×20 picture — a big one!' },
+      },
+    },
   },
   game: {
     back: '‹ Back',
@@ -42,6 +52,7 @@ export const en = {
     home: 'Home',
     notes: '✏️ Notes',
     erase: '⌫ Erase',
+    filled: 'Filled',
     dialog: {
       time: 'Time: {{value}}',
       mistakes: 'Mistakes: {{value}}',

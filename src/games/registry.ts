@@ -1,4 +1,4 @@
-export type GameId = 'sudoku' | 'maze';
+export type GameId = 'sudoku' | 'maze' | 'nonogram';
 
 export interface GameInfo {
   id: GameId;
@@ -15,4 +15,5 @@ export interface GameInfo {
 export const GAMES: GameInfo[] = [
   { id: 'sudoku', emoji: '🔢' },
   { id: 'maze', emoji: '🌀' },
+  { id: 'nonogram', emoji: '🖼️' },
 ];

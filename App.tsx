@@ -7,6 +7,7 @@ import { GamePickerScreen } from './src/screens/GamePickerScreen';
 import { GameScreen } from './src/screens/GameScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { MazeGameScreen } from './src/screens/MazeGameScreen';
+import { NonogramGameScreen } from './src/screens/NonogramGameScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
 import { theme } from './src/theme';
 import { RootStackParamList } from './src/types';
@@ -35,6 +36,7 @@ function App(): React.JSX.Element {
         <Stack.Screen name="GamePicker" component={GamePickerScreen} />
         <Stack.Screen name="Game" component={GameScreen} />
         <Stack.Screen name="MazeGame" component={MazeGameScreen} />
+        <Stack.Screen name="NonogramGame" component={NonogramGameScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>

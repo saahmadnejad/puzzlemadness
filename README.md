@@ -1,12 +1,13 @@
 # Sudoku Madness
 
-A React Native (TypeScript) puzzle super app inspired by [puzzlemadness.co.uk](https://puzzlemadness.co.uk/) — fully offline, no backend. Games so far: **Sudoku** and **Maze**.
+A React Native (TypeScript) puzzle super app inspired by [puzzlemadness.co.uk](https://puzzlemadness.co.uk/) — fully offline, no backend. Games so far: **Sudoku**, **Maze** and **Nonogram**.
 
 ## Features (v1)
 
 - **Super-app shell** — home lists games from a registry (`src/games/registry.ts`); each game has a difficulty picker with a daily option. Adding a game = registry entry + resources + screen
 - **Sudoku** — Easy / Medium / Hard + daily puzzle, on-device generator with uniqueness check, pencil notes, error highlighting, mistake counter, timer
 - **Maze** — Easy / Medium / Hard + daily maze, drag your finger to draw the path (backtracking supported), timer
+- **Nonogram** — Easy (10×10) / Medium (15×15) / Hard (20×20) + daily, tap to cycle fill/cross, row & column clues that dim when completed, hidden-picture generator with a unique-solution solver
 - **Daily puzzles** — deterministic per date, same for every player (seeded PRNG), no server needed
 - **i18n** — English and Farsi (فارسی) driven by a language registry (code, native label, RTL, digit style), persisted language switcher in Settings, Persian digits (۰–۹), Vazir font
 
