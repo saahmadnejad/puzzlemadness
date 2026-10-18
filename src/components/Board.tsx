@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useDigitFormatter } from '../i18n/digits';
 import { BOX, SIZE } from '../puzzles/generator';
 import { GameState } from '../state/gameReducer';
 import { theme } from '../theme';
@@ -10,22 +11,20 @@ interface Props {
 }
 
 function Notes({ mask }: { mask: number }) {
+  const digits = useDigitFormatter();
   return (
     <View style={styles.notesGrid}>
       {Array.from({ length: SIZE }, (_, i) => (
         <View key={i} style={styles.noteCell}>
-          <Text style={styles.noteText}>{mask & (1 << i) ? i + 1 : ''}</Text>
+          <Text style={styles.noteText}>{mask & (1 << i) ? digits(i + 1) : ''}</Text>
         </View>
       ))}
     </View>
   );
 }
 
-function Cell({
-  index,
-  state,
-  onSelect,
-}: Props & { index: number }) {
+function Cell({ index, state, onSelect }: Props & { index: number }) {
+  const digits = useDigitFormatter();
   const { values, notes, selected, puzzle, status } = state;
   const value = values[index];
   const isGiven = puzzle.givenCells[index];
@@ -39,8 +38,7 @@ function Cell({
     value === selectedValue &&
     peersOf(selected, index);
 
-  const isWrong =
-    !isGiven && value !== 0 && value !== puzzle.solution[index];
+  const isWrong = !isGiven && value !== 0 && value !== puzzle.solution[index];
 
   const r = Math.floor(index / SIZE);
   const c = index % SIZE;
@@ -65,7 +63,7 @@ function Cell({
             isWrong && status === 'playing' && styles.valueWrong,
           ]}
         >
-          {value}
+          {digits(value)}
         </Text>
       ) : notes[index] ? (
         <Notes mask={notes[index]} />
@@ -92,14 +90,12 @@ function peersOf(selected: number, index: number): boolean {
 export function Board({ state, onSelect }: Props) {
   return (
     <View style={styles.board}>
-      {Array.from({ length: CELLS_COUNT }, (_, i) => (
+      {Array.from({ length: SIZE * SIZE }, (_, i) => (
         <Cell key={i} index={i} state={state} onSelect={onSelect} />
       ))}
     </View>
   );
 }
-
-const CELLS_COUNT = SIZE * SIZE;
 
 const styles = StyleSheet.create({
   board: {
@@ -140,7 +136,8 @@ const styles = StyleSheet.create({
   },
   value: {
     fontSize: theme.fontSize.cell,
-    fontWeight: '600',
+    fontFamily: theme.fonts.bold,
+    fontWeight: 'normal',
   },
   valueGiven: {
     color: theme.colors.given,
@@ -165,6 +162,7 @@ const styles = StyleSheet.create({
   },
   noteText: {
     fontSize: theme.fontSize.note,
+    fontFamily: theme.fonts.regular,
     color: theme.colors.textMuted,
   },
 });

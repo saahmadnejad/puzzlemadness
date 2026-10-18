@@ -1,35 +1,62 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Language, isRTL, setLanguage } from '../i18n';
 import { Difficulty } from '../puzzles/generator';
 import { theme } from '../theme';
 import { RootStackParamList } from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const OPTIONS: { difficulty: Difficulty; title: string; subtitle: string }[] = [
-  { difficulty: 'daily', title: 'Daily Puzzle', subtitle: "Today's puzzle — same for everyone" },
-  { difficulty: 'easy', title: 'Easy', subtitle: 'More clues, few techniques needed' },
-  { difficulty: 'medium', title: 'Medium', subtitle: 'A balanced challenge' },
-  { difficulty: 'hard', title: 'Hard', subtitle: 'Fewest clues — bring your A-game' },
-];
+const OPTIONS: Difficulty[] = ['daily', 'easy', 'medium', 'hard'];
 
 export function HomeScreen({ navigation }: Props) {
+  const { t, i18n } = useTranslation();
+  const rtl = isRTL(i18n.language);
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Sudoku Madness</Text>
-        <Text style={styles.subtitle}>Daily sudoku, three difficulties, unlimited play</Text>
+        <View style={styles.headerRow}>
+          <View style={styles.headerText}>
+            <Text style={[styles.title, rtl && styles.rtl]}>{t('home.title')}</Text>
+            <Text style={[styles.subtitle, rtl && styles.rtl]}>{t('home.subtitle')}</Text>
+          </View>
+          <View style={styles.langSwitch}>
+            {(['en', 'fa'] as Language[]).map(lang => (
+              <Pressable
+                key={lang}
+                style={[styles.langPill, i18n.language === lang && styles.langPillActive]}
+                onPress={() => setLanguage(lang)}
+              >
+                <Text
+                  style={[
+                    styles.langPillText,
+                    i18n.language === lang && styles.langPillTextActive,
+                  ]}
+                >
+                  {lang === 'en' ? 'EN' : 'فا'}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        </View>
+
         <View style={styles.cards}>
-          {OPTIONS.map(opt => (
+          {OPTIONS.map(difficulty => (
             <Pressable
-              key={opt.difficulty}
+              key={difficulty}
               style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
-              onPress={() => navigation.navigate('Game', { difficulty: opt.difficulty })}
+              onPress={() => navigation.navigate('Game', { difficulty })}
             >
-              <Text style={styles.cardTitle}>{opt.title}</Text>
-              <Text style={styles.cardSubtitle}>{opt.subtitle}</Text>
+              <Text style={[styles.cardTitle, rtl && styles.rtl]}>
+                {t(`home.puzzles.${difficulty}.title`)}
+              </Text>
+              <Text style={[styles.cardSubtitle, rtl && styles.rtl]}>
+                {t(`home.puzzles.${difficulty}.subtitle`)}
+              </Text>
             </Pressable>
           ))}
         </View>
@@ -46,17 +73,56 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
   },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 24,
+  },
+  headerText: {
+    flex: 1,
+    marginRight: 12,
+  },
   title: {
     fontSize: 30,
     fontWeight: '800',
+    fontFamily: theme.fonts.bold,
     color: theme.colors.text,
     marginTop: 20,
   },
   subtitle: {
     fontSize: 15,
+    fontFamily: theme.fonts.regular,
     color: theme.colors.textMuted,
     marginTop: 6,
-    marginBottom: 24,
+  },
+  rtl: {
+    writingDirection: 'rtl',
+    textAlign: 'right',
+  },
+  langSwitch: {
+    flexDirection: 'row',
+    marginTop: 20,
+    backgroundColor: theme.colors.padKey,
+    borderRadius: 8,
+    padding: 3,
+  },
+  langPill: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 6,
+  },
+  langPillActive: {
+    backgroundColor: theme.colors.accent,
+  },
+  langPillText: {
+    fontSize: 13,
+    fontFamily: theme.fonts.bold,
+    fontWeight: 'normal',
+    color: theme.colors.textMuted,
+  },
+  langPillTextActive: {
+    color: '#ffffff',
   },
   cards: {
     gap: 14,
@@ -73,11 +139,13 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 19,
-    fontWeight: '700',
+    fontFamily: theme.fonts.bold,
+    fontWeight: 'normal',
     color: theme.colors.text,
   },
   cardSubtitle: {
     fontSize: 14,
+    fontFamily: theme.fonts.regular,
     color: theme.colors.textMuted,
     marginTop: 4,
   },

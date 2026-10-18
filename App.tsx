@@ -1,13 +1,30 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { initLanguage } from './src/i18n';
 import { GameScreen } from './src/screens/GameScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
+import { theme } from './src/theme';
 import { RootStackParamList } from './src/types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): React.JSX.Element {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    initLanguage().finally(() => setReady(true));
+  }, []);
+
+  if (!ready) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color={theme.colors.accent} />
+      </View>
+    );
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -17,5 +34,14 @@ function App(): React.JSX.Element {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.background,
+  },
+});
 
 export default App;

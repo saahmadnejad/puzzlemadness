@@ -1,5 +1,7 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useDigitFormatter } from '../i18n/digits';
 import { SIZE } from '../puzzles/generator';
 import { theme } from '../theme';
 
@@ -12,6 +14,8 @@ interface Props {
 }
 
 export function NumberPad({ notesMode, disabled, onInput, onErase, onToggleNotes }: Props) {
+  const { t } = useTranslation();
+  const digits = useDigitFormatter();
   return (
     <View style={styles.pad}>
       <View style={styles.keys}>
@@ -22,16 +26,20 @@ export function NumberPad({ notesMode, disabled, onInput, onErase, onToggleNotes
             onPress={() => onInput(n)}
             disabled={disabled}
           >
-            <Text style={[styles.keyText, disabled && styles.keyTextDisabled]}>{n}</Text>
+            <Text style={[styles.keyText, disabled && styles.keyTextDisabled]}>
+              {digits(n)}
+            </Text>
           </Pressable>
         ))}
       </View>
       <View style={styles.actions}>
         <Pressable style={[styles.action, notesMode && styles.actionActive]} onPress={onToggleNotes}>
-          <Text style={[styles.actionText, notesMode && styles.actionTextActive]}>✏️ Notes</Text>
+          <Text style={[styles.actionText, notesMode && styles.actionTextActive]}>
+            {t('game.notes')}
+          </Text>
         </Pressable>
         <Pressable style={styles.action} onPress={onErase}>
-          <Text style={styles.actionText}>⌫ Erase</Text>
+          <Text style={styles.actionText}>{t('game.erase')}</Text>
         </Pressable>
       </View>
     </View>
@@ -61,7 +69,8 @@ const styles = StyleSheet.create({
   },
   keyText: {
     fontSize: theme.fontSize.pad,
-    fontWeight: '600',
+    fontFamily: theme.fonts.bold,
+    fontWeight: 'normal',
     color: theme.colors.text,
   },
   keyTextDisabled: {
@@ -82,7 +91,8 @@ const styles = StyleSheet.create({
   },
   actionText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: theme.fonts.bold,
+    fontWeight: 'normal',
     color: theme.colors.text,
   },
   actionTextActive: {

@@ -1,9 +1,12 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useReducer, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Board } from '../components/Board';
 import { NumberPad } from '../components/NumberPad';
+import { isRTL } from '../i18n';
+import { useDigitFormatter } from '../i18n/digits';
 import {
   Difficulty,
   Puzzle,
@@ -16,13 +19,6 @@ import { theme } from '../theme';
 import { RootStackParamList } from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Game'>;
-
-const LABELS: Record<Difficulty, string> = {
-  daily: 'Daily Puzzle',
-  easy: 'Easy',
-  medium: 'Medium',
-  hard: 'Hard',
-};
 
 function newPuzzleFor(difficulty: Difficulty): Puzzle {
   return difficulty === 'daily'
@@ -44,7 +40,7 @@ export function GameScreen({ navigation, route }: Props) {
     <GameSession
       key={`${difficulty}-${gameId}`}
       puzzle={puzzle}
-      label={LABELS[difficulty] ?? difficulty}
+      difficulty={difficulty}
       onBack={() => navigation.goBack()}
       onNewGame={startNewGame}
     />
@@ -53,12 +49,16 @@ export function GameScreen({ navigation, route }: Props) {
 
 interface SessionProps {
   puzzle: Puzzle;
-  label: string;
+  difficulty: Difficulty;
   onBack: () => void;
   onNewGame: () => void;
 }
 
-function GameSession({ puzzle, label, onBack, onNewGame }: SessionProps) {
+function GameSession({ puzzle, difficulty, onBack, onNewGame }: SessionProps) {
+  const { t, i18n } = useTranslation();
+  const digits = useDigitFormatter();
+  const rtl = isRTL(i18n.language);
+
   const [state, dispatch] = useReducer(gameReducer, puzzle, createInitialState);
   const solved = state.status === 'solved';
   const elapsed = useTimer(!solved, String(puzzle.givens[0]) + puzzle.givens[40]);
@@ -67,23 +67,29 @@ function GameSession({ puzzle, label, onBack, onNewGame }: SessionProps) {
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
         <Pressable onPress={onBack} hitSlop={12}>
-          <Text style={styles.back}>‹ Back</Text>
+          <Text style={[styles.back, rtl && styles.rtl]}>{t('game.back')}</Text>
         </Pressable>
-        <Text style={styles.headerTitle}>{label}</Text>
+        <Text style={[styles.headerTitle, rtl && styles.rtl]}>
+          {t(`home.puzzles.${difficulty}.title`)}
+        </Text>
         <Pressable onPress={onNewGame} hitSlop={12}>
-          <Text style={styles.newGame}>New ⟳</Text>
+          <Text style={[styles.newGame, rtl && styles.rtl]}>{t('game.new')}</Text>
         </Pressable>
       </View>
 
       <View style={styles.stats}>
         <View style={styles.stat}>
-          <Text style={styles.statLabel}>Time</Text>
-          <Text style={styles.statValue}>{formatTime(elapsed)}</Text>
+          <Text style={[styles.statLabel, rtl && styles.rtl]}>{t('game.time')}</Text>
+          <Text style={[styles.statValue, rtl && styles.rtl]}>
+            {digits(formatTime(elapsed))}
+          </Text>
         </View>
         <View style={styles.stat}>
-          <Text style={styles.statLabel}>Mistakes</Text>
-          <Text style={[styles.statValue, state.mistakes > 0 && styles.statValueBad]}>
-            {state.mistakes}
+          <Text style={[styles.statLabel, rtl && styles.rtl]}>{t('game.mistakes')}</Text>
+          <Text
+            style={[styles.statValue, state.mistakes > 0 && styles.statValueBad, rtl && styles.rtl]}
+          >
+            {digits(state.mistakes)}
           </Text>
         </View>
       </View>
@@ -105,18 +111,22 @@ function GameSession({ puzzle, label, onBack, onNewGame }: SessionProps) {
       <Modal visible={solved} transparent animationType="fade">
         <View style={styles.overlay}>
           <View style={styles.dialog}>
-            <Text style={styles.dialogTitle}>Solved! 🎉</Text>
-            <Text style={styles.dialogLine}>Time: {formatTime(elapsed)}</Text>
-            <Text style={styles.dialogLine}>Mistakes: {state.mistakes}</Text>
+            <Text style={[styles.dialogTitle, rtl && styles.rtl]}>{t('game.solved')}</Text>
+            <Text style={[styles.dialogLine, rtl && styles.rtl]}>
+              {t('game.time')}: {digits(formatTime(elapsed))}
+            </Text>
+            <Text style={[styles.dialogLine, rtl && styles.rtl]}>
+              {t('game.mistakes')}: {digits(state.mistakes)}
+            </Text>
             <View style={styles.dialogButtons}>
               <Pressable
                 style={[styles.dialogButton, styles.dialogButtonPrimary]}
                 onPress={onNewGame}
               >
-                <Text style={styles.dialogButtonTextPrimary}>Play again</Text>
+                <Text style={styles.dialogButtonTextPrimary}>{t('game.playAgain')}</Text>
               </Pressable>
               <Pressable style={styles.dialogButton} onPress={onBack}>
-                <Text style={styles.dialogButtonText}>Home</Text>
+                <Text style={styles.dialogButtonText}>{t('game.home')}</Text>
               </Pressable>
             </View>
           </View>
@@ -141,17 +151,24 @@ const styles = StyleSheet.create({
   back: {
     fontSize: 17,
     color: theme.colors.accent,
-    fontWeight: '600',
+    fontFamily: theme.fonts.bold,
+    fontWeight: 'normal',
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: theme.fonts.bold,
+    fontWeight: 'normal',
     color: theme.colors.text,
   },
   newGame: {
     fontSize: 17,
     color: theme.colors.accent,
-    fontWeight: '600',
+    fontFamily: theme.fonts.bold,
+    fontWeight: 'normal',
+  },
+  rtl: {
+    writingDirection: 'rtl',
+    textAlign: 'right',
   },
   stats: {
     flexDirection: 'row',
@@ -163,13 +180,15 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 12,
+    fontFamily: theme.fonts.regular,
     color: theme.colors.textMuted,
     textTransform: 'uppercase',
     letterSpacing: 1,
   },
   statValue: {
     fontSize: 20,
-    fontWeight: '700',
+    fontFamily: theme.fonts.bold,
+    fontWeight: 'normal',
     color: theme.colors.text,
     marginTop: 2,
   },
@@ -199,12 +218,14 @@ const styles = StyleSheet.create({
   },
   dialogTitle: {
     fontSize: 24,
-    fontWeight: '800',
+    fontFamily: theme.fonts.bold,
+    fontWeight: 'normal',
     color: theme.colors.text,
     marginBottom: 12,
   },
   dialogLine: {
     fontSize: 16,
+    fontFamily: theme.fonts.regular,
     color: theme.colors.textMuted,
     marginBottom: 4,
   },
@@ -223,11 +244,13 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.accent,
   },
   dialogButtonText: {
-    fontWeight: '700',
+    fontFamily: theme.fonts.bold,
+    fontWeight: 'normal',
     color: theme.colors.text,
   },
   dialogButtonTextPrimary: {
-    fontWeight: '700',
+    fontFamily: theme.fonts.bold,
+    fontWeight: 'normal',
     color: '#ffffff',
   },
 });

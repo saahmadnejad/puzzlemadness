@@ -17,6 +17,15 @@ export const theme = {
     padKey: '#eef1f5',
     danger: '#fee2e2',
   },
+  /**
+   * Vazir covers Latin and Persian glyphs, so it is used for every language.
+   * Bold is a separate family (Vazir-Bold.ttf), so bold text uses the bold
+   * family with fontWeight 'normal' to avoid synthetic bolding.
+   */
+  fonts: {
+    regular: 'Vazir-Regular',
+    bold: 'Vazir-Bold',
+  },
   fontSize: {
     cell: 22,
     note: 9,
